@@ -1,0 +1,172 @@
+<!--
+ * @Author: ChenDong 1516216399@qq.com
+ * @Date: 2024-07-03 15:09:08
+ * @LastEditors: ChenDong 1516216399@qq.com
+ * @LastEditTime: 2024-07-04 14:23:03
+ * @FilePath: \武汉实习\elementplus\index.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 导入Elementplus Css样式 -->
+    <link rel="stylesheet" href="css/element-plus.css">
+    <style>
+         .el-aside {
+            height: 90vh;
+        } 
+        .el-col-12{
+            max-width: 100%;
+            flex:1 0 50%;
+        }
+    </style>
+</head>
+<div id="app">
+    <div class="main">
+        <!-- 面包屑 breadcrumb -->
+=       <div>
+                            <el-breadcrumb separator="/">
+                                <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
+                                <el-breadcrumb-item><a href="/">promotion management</a></el-breadcrumb-item>
+                                <el-breadcrumb-item>promotion list</el-breadcrumb-item>
+                                <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+                              </el-breadcrumb>
+        </div>
+        <!--表格 table-->
+        <div style="margin-top: 20px;">
+            <el-table :data="tableData" style="width: 100%">
+            <!-- 这里的el-table组件标签必须要有明确的结束标签，否则就是做出一个单列的效果 -->
+            <el-table-column prop="date" label="日期" width="180" ></el-table-column>
+            <el-table-column prop="name" label="姓名" width="180" ></el-table-column>
+            <el-table-column prop="address" label="地址" ></el-table-column>
+            <el-table-column label="操作">
+                <template #default="scope">
+                <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
+                    >编辑</el-button
+                >
+                <el-button
+                    size="small"
+                    type="danger"
+                    @click="handleDelete(scope.$index, scope.row)"
+                    >删除</el-button
+                >
+                </template>
+            </el-table-column>
+            </el-table>
+        </div>
+    </div>
+        <!--对话框-->
+        <el-dialog v-model="dialogFormVisible" title="Shipping address">
+            <el-form :model="form">
+            <el-form-item label="姓名" :label-width="formLabelWidth">
+                <el-input v-model="form.name" autocomplete="off" />
+            </el-form-item>
+            <!--v-model 是绑定下面定义的响应式变量，双向数据绑定-->
+            <el-form-item label="日期" :label-width="formLabelWidth">
+              <el-input v-model="form.date" autocomplete="off" />
+            </el-form-item>
+
+            <template #footer>
+            <span class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">Cancel</el-button>
+                <el-button type="primary" @click="dialogFormVisible = false"
+                >Confirm</el-button
+                >
+            </span>
+            </template>
+        </el-dialog>
+      </div>  
+</div>
+
+<body>
+    <!-- 导入vue框架 -->
+    <script src="js/v3.2.8/vue.global.prod.js"></script>
+    <!-- 导入ElementPlus框架 -->
+    <script src="js/element-plus.js"></script>
+    <!-- 导入Elementplus Icon  -->
+    <script src="js/element-icons.js"></script>
+    <script>
+    // createApp()接受一个{}参数，用来创建一个vue应用
+    // reactive 专门用于创建对象{}、数组[]类型的响应式数据
+    // ref 用来创建Number bool string,基础数据类型
+        const {
+            createApp,
+            reactive,
+            ref
+        } = Vue;
+        // const msg1 = "字符串类型";
+        // const msg = ref("字符串类型")
+        const tableData = reactive([
+        {
+                    date: '2016-05-03',
+                    name: '张三',
+                    address: 'No. 189, Grove St, Los Angeles',
+                },
+                {
+                    date: '2016-05-02',
+                    name: '李四',
+                    address: 'No. 189, Grove St, Los Angeles',
+                },
+                {
+                    date: '2016-05-04',
+                    name: '王五',
+                    address: 'No. 189, Grove St, Los Angeles',
+                },
+                {
+                    date: '2016-05-01',
+                    name: '赵四',
+                    address: 'No. 189, Grove St, Los Angeles',
+                },
+            ]);
+            //对话框
+            const dialogFormVisible = ref(false)
+            const formLabelWidth = '140px'
+            //对话框的表单
+                    const form = reactive({
+                            name: '',
+                            date: ''
+                    })
+                const app = createApp({
+                    setup() {
+                            const handleEdit = (index, row) => {
+                                //显示对话框
+                                dialogFormVisible.value=true
+                                form.name = row.name
+                                form.date = row.date
+                                console.log(index, row)
+                            }
+                            const handleDelete = (index, row) => {
+                            console.log(index, row)
+                            }
+                    
+                // 返回模板中需要的响应式引用  
+                return {
+                    //msg
+                    tableData,
+                    handleEdit,
+                    handleDelete,
+                    dialogFormVisible,
+                    form
+                };
+            }
+
+        });
+        // 应用使用element plus 组件
+        app.use(ElementPlus);
+        // "location" 参数对应<location>
+        app.component("location" , ElementPlusIconsVue.Location)
+        app.component("document" , ElementPlusIconsVue.Document)
+        app.component("icon-menu" , ElementPlusIconsVue.Menu)
+        app.component("setting" , ElementPlusIconsVue.Setting)
+
+        //将应用挂载到 #app
+        app.mount('#app');
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,154 @@
+<!--
+ * @Author: ChenDong 1516216399@qq.com
+ * @Date: 2024-07-03 15:09:08
+ * @LastEditors: ChenDong 1516216399@qq.com
+ * @LastEditTime: 2024-07-04 14:23:03
+ * @FilePath: \武汉实习\elementplus\index.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 导入Elementplus Css样式 -->
+    <link rel="stylesheet" href="css/element-plus.css">
+    <style>
+         .el-aside {
+            height: 90vh;
+        } 
+        .el-col-12{
+            max-width: 100%;
+            flex:1 0 50%;
+        }
+        .el-menu{
+          border-right:0 ;
+        }
+        iframe{
+          width: 100%;
+          height: 100%;
+          border: 0;
+        }
+        a, a:hover,a:visited{
+          text-decoration: none;
+        }
+
+
+    </style>
+</head>
+<div id="app">
+    <!--布局容器-->
+    <div class="common-layout"></div>
+    {{msg}}
+    
+        <el-container>
+          <el-header>Header</el-header>
+          <el-container>
+            <el-aside width="300px">
+                 <!-- 把aside替换掉 -->
+                <el-row class="tac">
+                    <el-col :span="12">
+                      <!-- <h5 class="mb-2">Default colors</h5> -->
+                      <el-menu
+                        default-active="2"
+                        class="el-menu-vertical-demo"
+                        @open="handleOpen"
+                        @close="handleClose"
+                      >
+                        <el-sub-menu index="1">
+                          <template #title>
+                            <el-icon><location /></el-icon>
+                            <span>项目主页</span>
+                          </template>
+                          <a href="page1.html" target="myframe">
+                            <el-menu-item>item one </el-menu-item>
+                          </a>
+                          <a href="page2.html" target="myframe">
+                            <el-menu-item>图表数据 </el-menu-item>
+                          </a>
+                          </el-sub-menu>
+                        <el-sub-menu index="2">
+                            <template #title>
+                                <el-icon><location /></el-icon>
+                                <span>后台数据</span>
+                            </template>
+                            <a href="page3.html" target="myframe">
+                                <el-menu-item>热度统计 </el-menu-item>
+                            </a>
+                            <a href="page4.html" target="myframe">
+                                <el-menu-item>时长统计 </el-menu-item>
+                            </a>
+                            <a href="page5.html" target="myframe">
+                                <el-menu-item>时段统计 </el-menu-item>
+                            </a>
+                        </el-sub-menu>
+                        <el-menu-item index="3" disabled>
+                          <el-icon><document /></el-icon>
+                          <span>Navigator Three</span>
+                        </el-menu-item>
+                        <el-menu-item index="4">
+                          <el-icon><setting /></el-icon>    
+                          <span>Navigator Four</span>
+                        </el-menu-item>
+                      </el-menu>
+                    </el-col>
+                  </el-row>
+            </el-aside>
+            <el-container>
+              <el-main>
+                   <!--设置默认显示内容-->
+                   <iframe src="page1.html"  name="myframe"></iframe>
+              </el-main>
+              <el-footer>版权所有@辉狗他爹</el-footer>
+            </el-container>
+          </el-container>
+        </el-container>
+        
+      </div>   
+</div>
+
+<body>
+    <!-- 导入vue框架 -->
+    <script src="js/v3.2.8/vue.global.prod.js"></script>
+    <!-- 导入ElementPlus框架 -->
+    <script src="js/element-plus.js"></script>
+    <!-- 导入Elementplus Icon  -->
+    <script src="js/element-icons.js"></script>
+    <script>
+    // createApp()接受一个{}参数，用来创建一个vue应用
+    // reactive 专门用于创建对象{}、数组[]类型的响应式数据
+    // ref 用来创建Number bool string,基础数据类型
+        const {
+            createApp,
+            reactive,
+            ref
+        } = Vue;
+        // const msg1 = "字符串类型";
+        // const msg = ref("字符串类型")
+        const app = createApp({
+            setup() 
+      {
+        // 返回模板中需要的响应式引用  
+        return {
+            
+        };
+      }
+
+        });
+        // 应用使用element plus 组件
+        app.use(ElementPlus);
+        // "location" 参数对应<location>
+        app.component("location" , ElementPlusIconsVue.Location)
+        app.component("document" , ElementPlusIconsVue.Document)
+        app.component("icon-menu" , ElementPlusIconsVue.Menu)
+        app.component("setting" , ElementPlusIconsVue.Setting)
+
+        //将应用挂载到 #app
+        app.mount('#app');
+    </script>
+
+</body>
+
+</html>

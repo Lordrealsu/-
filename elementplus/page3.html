@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 导入Elementplus Css样式 -->
+    <link rel="stylesheet" href="css/element-plus.css">
+    <style>
+        .el-aside {
+            height: 90vh;
+        }
+        .el-col-12{
+            max-width: 100%;
+            flex:1 0 50%;
+        }
+
+    </style>
+</head>
+<div id="app">
+    <div class="main">
+        <!-- 面包屑 breadcrumb -->
+        =       <div>
+        <el-breadcrumb separator="/">
+            <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
+            <el-breadcrumb-item><a href="/">promotion management</a></el-breadcrumb-item>
+            <el-breadcrumb-item>promotion list</el-breadcrumb-item>
+            <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+        </el-breadcrumb>
+    </div>
+        <div style="margin-top: 20px;">
+            <el-row>
+                <el-col :span="10" >
+                    <el-card>
+                        <div id="chart3" style="width: 480px; height: 300px;">
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </div>
+</div>
+<div class="tit"><h3>热度统计</h3></div>
+<div id="global_hn_statistic" class="tab">
+    <table style="border-collapse: collapse; width: 100%;">
+        <thead>
+        <tr style="background-color: #f2f2f2;">
+            <th style="padding: 8px; text-align: left;">热度段</th>
+            <th style="padding: 8px; text-align: left;">主播数量</th>
+            <th style="padding: 8px; text-align: left;">主播占比</th>
+            <th style="padding: 8px; text-align: left;">总热度</th>
+            <th style="padding: 8px; text-align: left;">总热度占比</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td style="padding: 8px; text-align: left;">100w以上</td>
+            <td style="padding: 8px; text-align: left;">52</td>
+            <td style="padding: 8px; text-align: left;">0.14%</td>
+            <td style="padding: 8px; text-align: left;">95,003,720</td>
+            <td style="padding: 8px; text-align: left;">5.95%</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; text-align: left;">100w~50w</td>
+            <td style="padding: 8px; text-align: left;">163</td>
+            <td style="padding: 8px; text-align: left;">0.43%</td>
+            <td style="padding: 8px; text-align: left;">105,098,937</td>
+            <td style="padding: 8px; text-align: left;">6.58%</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; text-align: left;">50w~10w</td>
+            <td style="padding: 8px; text-align: left;">2,516</td>
+            <td style="padding: 8px; text-align: left;">6.59%</td>
+            <td style="padding: 8px; text-align: left;">497,715,936</td>
+            <td style="padding: 8px; text-align: left;">31.15%</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; text-align: left;">10w~1w</td>
+            <td style="padding: 8px; text-align: left;">23,630</td>
+            <td style="padding: 8px; text-align: left;">61.9%</td>
+            <td style="padding: 8px; text-align: left;">896,583,616</td>
+            <td style="padding: 8px; text-align: left;">56.11%</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; text-align: left;">1w~5k</td>
+            <td style="padding: 8px; text-align: left;">401</td>
+            <td style="padding: 8px; text-align: left;">1.05%</td>
+            <td style="padding: 8px; text-align: left;">3,330,378</td>
+            <td style="padding: 8px; text-align: left;">0.21%</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; text-align: left;">5k~1k</td>
+            <td style="padding: 8px; text-align: left;">10</td>
+            <td style="padding: 8px; text-align: left;">0.03%</td>
+            <td style="padding: 8px; text-align: left;">37,983</td>
+            <td style="padding: 8px; text-align: left;">0.0%</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; text-align: left;">1k~100</td>
+            <td style="padding: 8px; text-align: left;">0</td>
+            <td style="padding: 8px; text-align: left;">0%</td>
+            <td style="padding: 8px; text-align: left;">0</td>
+            <td style="padding: 8px; text-align: left;">0%</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px; text-align: left;">100~0</td>
+            <td style="padding: 8px; text-align: left;">11,402</td>
+            <td style="padding: 8px; text-align: left;">29.87%</td>
+            <td style="padding: 8px; text-align: left;">4,111</td>
+            <td style="padding: 8px; text-align: left;">0.0%</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<body>
+<!-- 导入vue框架 -->
+<script src="js/v3.2.8/vue.global.prod.js"></script>
+<!-- 导入ElementPlus框架 -->
+<script src="js/element-plus.js"></script>
+<!-- 导入Elementplus Icon  -->
+<script src="js/element-icons.js"></script>
+<!--导入 Echarts-->
+<script src="js/echarts.min.js"></script>
+<script>
+            //等待DOM加载完成
+            document.addEventListener("DOMContentLoaded",function()
+            {
+
+                const chart3Dom = document.querySelector("#chart3")
+                        const chart3Option =
+                            {
+                                tooltip: {
+                                    trigger: 'item'
+                                },
+                                legend: {
+                                    top: '5%',
+                                    left: 'center'
+                                },
+                                series: [
+                                    {
+                                        name: '按热度分段，总热度统计',
+                                        type: 'pie',
+                                        radius: ['40%', '70%'],
+                                        avoidLabelOverlap: false,
+                                        label: {
+                                            show: false,
+                                            position: 'center'
+                                        },
+                                        emphasis: {
+                                            label: {
+                                                show: true,
+                                                fontSize: 40,
+                                                fontWeight: 'bold'
+                                            }
+                                        },
+                                        labelLine: {
+                                            show: false
+                                        },
+                                        data:
+                                            [
+                                            {value: 180, name: '100W-50W'},
+                                            {value: 140, name: '100W以上'},
+                                            {value: 880, name: '50W-10W'},
+                                            {value: 1750, name: '10W-1W'},
+                                            ]
+
+                                    }
+                                    ]
+                            };
+
+
+                    initEcharts(chart3Dom, chart3Option);
+
+            })
+
+
+            function initEcharts(dom, option)
+            {
+                //初始化实例
+                const domEcharts = echarts.init(dom);
+                //设置echarts 实例
+                domEcharts.setOption(option);
+
+            }
+            const {
+                createApp,
+                reactive,
+                ref
+            } = Vue;
+
+            // 应用使用element plus 组件
+            app.use(ElementPlus);
+            // "location" 参数对应<location>
+            app.component("location" , ElementPlusIconsVue.Location)
+            app.component("document" , ElementPlusIconsVue.Document)
+            app.component("icon-menu" , ElementPlusIconsVue.Menu)
+            app.component("setting" , ElementPlusIconsVue.Setting)
+
+            //将应用挂载到 #app
+            app.mount('#app');
+    </script>
+
+    </body>
+</div>
+</html>
