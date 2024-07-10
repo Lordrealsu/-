@@ -31,22 +31,21 @@
         <!-- 面包屑 breadcrumb -->
 =       <div>
                             <el-breadcrumb separator="/">
-                                <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-                                <el-breadcrumb-item><a href="/">promotion management</a></el-breadcrumb-item>
-                                <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-                                <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+                                <el-breadcrumb-item :to="{ path: '/' }">项目主页</el-breadcrumb-item>
+                                <el-breadcrumb-item><a href="/">图表数据</a></el-breadcrumb-item>
+
                               </el-breadcrumb>
         </div>
         <div style="margin-top: 20px;">
             <el-row>
-                <el-col :span="10" >
-                    <el-card>
-                        <div id="chart1" style="width: 480px; height: 300px;">
+<!--                <el-col :span="10" >-->
+<!--                    <el-card>-->
+<!--                        <div id="chart1" style="width: 480px; height: 300px;">-->
 
-                        </div>
-                    </el-card>
+<!--                        </div>-->
+<!--                    </el-card>-->
 
-                </el-col>
+<!--                </el-col>-->
                 <el-col :span="14" >
                     <el-card>
                         <div id="chart2" style="width: 560px; height: 300px;">
@@ -155,28 +154,8 @@
             </el-table>
         </div>  -->
     </div>
-        <!--对话框-->
-        <el-dialog v-model="dialogFormVisible" title="Shipping address">
-            <el-form :model="form">
-                <el-form-item label="姓名" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" autocomplete="off" />
-                </el-form-item>
-                <!--v-model 是绑定下面定义的响应式变量，双向数据绑定-->
-                <el-form-item label="日期" :label-width="formLabelWidth">
-                  <el-input v-model="form.date" autocomplete="off" />
-                </el-form-item>
-            </el-form>
 
-            <template #footer>
-            <span class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="dialogFormVisible = false">
-                Confirm</el-button>
 
-            </span>
-            </template>
-        </el-dialog>
-      </div>  
 </div>
 
 <body>
@@ -194,7 +173,7 @@
         {
             //初始化一个图标
             //document.getElementById("chart1")
-            const chart1Dom = document.querySelector("#chart1") 
+            //const chart1Dom = document.querySelector("#chart1")
             //异步请求图表数据
             // fetch("url")
             // .then(response=>{
@@ -209,34 +188,34 @@
             // .catch(error=>{
             //     console.log(error)
             // })
-            fetch("data/data.json")
+            //fetch("data/data.json")
             //检查响应是否成功
-            .then(response=>response.json())
-            .then(data =>{//解析数据
-                const chart10ption = {
-                    title: {
-                    text: 'ECharts 入门示例'
-                    },
-                    tooltip: {}, 
-                    xAxis: {
-                        data: data.xAxisData
-                    },
-                    yAxis: {},
-                    series: [
-                    {
-                        name: '销量',
-                        type: 'bar',
-                        data: data.seriesData
-                    }
-                ]
-                
-                }
-                    initEcharts(chart1Dom,chart10ption);
-            })
-            .catch(error=>
-            {
-                console.log(error)
-             })
+            //.then(response=>response.json())
+           //.then(data =>{//解析数据
+           //      const chart10ption = {
+           //          title: {
+           //          text: 'ECharts 入门示例'
+           //          },
+           //          tooltip: {},
+           //          xAxis: {
+           //              data: data.xAxisData
+           //          },
+           //          yAxis: {},
+           //          series: [
+           //          {
+           //              name: '销量',
+           //              type: 'bar',
+           //              data: data.seriesData
+           //          }
+           //      ]
+           //
+           //      }
+           //          initEcharts(chart1Dom,chart10ption);
+           //  })
+           //  .catch(error=>
+           //  {
+           //      console.log(error)
+           //   })
             //指定图标配置
             // var chart10ption = {
 
